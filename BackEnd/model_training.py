@@ -7,6 +7,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.metrics import classification_report
+from joblib import Parallel, delayed 
+import joblib
 
 # Load the dataset
 dataset1 = pd.read_csv('./BackEnd/mail_data_1.csv', encoding='latin-1')
@@ -90,10 +92,14 @@ accuracy_on_test_data = accuracy_score(Y_test, prediction_on_test_data)
 # print("Recall : ",recall)
 # print("Specificity : ",specificity)
 
-input_your_mail ="INPUT STRING"
-input_data_features = feature_extraction.transform([input_your_mail])
-prediction = model.predict(input_data_features)
-if prediction[0] == 1:
-    print("Ham Mail")
-else:
-    print("Spam Mail")
+# Save the model
+joblib.dump(model, 'saved_model.pkl')
+
+# Test an input mail
+# input_your_mail ="INPUT STRING"
+# input_data_features = feature_extraction.transform([input_your_mail])
+# prediction = model.predict(input_data_features)
+# if prediction[0] == 1:
+#     print("Ham Mail")
+# else:
+#     print("Spam Mail")
