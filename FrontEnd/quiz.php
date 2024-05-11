@@ -1,36 +1,41 @@
 <?php include_once("include/header.php"); ?>
+<?php
+// getting email data from mixed_emails.json
+$json = file_get_contents('data/mixed_emails.json');
+$data = json_decode($json, true);
 
+?>
 
-
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Phishing Academy</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="index.html">Home</a></li>
-      <li><a href="quiz.html">Quiz</a></li>
-      <li><a href="phishingcheker.html">Phishing Checker</a></li>
-      <li><a href="bot.html">Chat Bot</a></li>
-    </ul>
-  </div>
-</nav>
 <div class="container">
-  <h3>Quiz</h3>
-  <p>Take this quiz to test your knowledge on phishing.</p>
+  <form action="/quiz.php" method="post">
+    <div class="panel-group">
+      <?php
+      $used = array();
+      for ($i = 0; $i < 25; $i++) {
+        $rand = rand(0, 24);
+        $email = $data[$rand];
+        if (in_array($rand, $used)) {
+          $i--;
+          continue;
+        }
+        array_push($used, $rand);
+        echo "<div class='panel panel-default border'>";
+
+        echo "<p>" . $email['text'] . "</p>";
+
+        echo '<input type="radio" class="btn-check" name="options-outlined' . $rand . '" id="true' . $rand . '" autocomplete="off" checked>
+        <label class="btn btn-outline-success" for="true' . $rand . '">True</label>';
+        echo '<input type="radio" class="btn-check" name="options-outlined' . $rand . '" id="false' . $rand . '" autocomplete="off">
+        <label class="btn btn-outline-danger" for="false' . $rand . '">False</label>';
+        echo '</div>';
+      }
+      ?>
+    </div>
+
+    <input type="submit" value="Submit" class="btn btn-primary">
+  </form>
+
 </div>
 
-<div class="container">
-  <div class="panel panel-default">
-    <div class="panel-body">
 
-      <div class="btn-group">
-        <button type="button" class="btn btn-primary">Left</button>
-        <button type="button" class="btn btn-primary">Middle</button>
-        <button type="button" class="btn btn-primary">Right</button>
-      </div>
-    </div>
-  </div>
-
-
-  <?php include_once("include/footer.php"); ?>
+<?php include_once("include/footer.php"); ?>
