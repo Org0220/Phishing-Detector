@@ -94,6 +94,7 @@ accuracy_on_test_data = accuracy_score(Y_test, prediction_on_test_data)
 
 # Save the model
 joblib.dump(model, 'saved_model.pkl')
+joblib.dump(feature_extraction, 'feature_extraction.pkl')
 
 # Test an input mail
 # input_your_mail ="INPUT STRING"

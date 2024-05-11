@@ -1,19 +1,36 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
 from flask import Flask, request
 from joblib import Parallel, delayed 
 import joblib
 
+# Load the model
+reg_from_joblib = joblib.load('./BackEnd/saved_model.pkl')
 
-# Test an input mail
-reg_from_joblib = joblib.load('./Phishing-Detector/BackEnd/saved_model.pkl')
+# Load the vectorizer
+feature_extraction = joblib.load('./BackEnd/feature_extraction.pkl')
 
-test_mail ="INPUT STRING"
-prediction = reg_from_joblib.predict(test_mail)
-# input_data_features = feature_extraction.transform([input_your_mail])
-# prediction = model.predict(input_data_features)
-if prediction[0] == 1:
-    print("Ham Mail")
-else:
-    print("Spam Mail")
+#predict function
+def predict(text,model):
+    cw = feature_extraction.transform([text])
+    result = model.predict(cw)
+    if result[0] == 1:
+        print("Ham Mail")
+    else:
+        print("Spam Mail")
+
+# test string
+test_mail = "Hey John, how r u? I was wondering what the status of the proeject is."
+
+predict(test_mail, reg_from_joblib)
+
+# prediction = reg_from_joblib.predict(test_mail)
+# input_data_features = feature_extraction.transform([test_mail])
+# prediction = reg_from_joblib.predict(input_data_features)
+
+# if prediction[0] == 1:
+#     print("Ham Mail")
+# else:
+#     print("Spam Mail")
 
 
 
