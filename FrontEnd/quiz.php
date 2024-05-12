@@ -120,8 +120,39 @@ $data = json_decode($json, true);
       firstPart();
 
     } else {
-      console.log("smt")
       alert("Quiz completed! Your score is: " + score + "/ 10");
+      // Define the URL endpoint and the data you want to send
+      const url = 'https://localhost/';
+      const data = {
+        key1: 'value1',
+        key2: 'value2'
+      };
+
+      // Define options for the fetch request
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json' // Set the content type to JSON
+        },
+        body: JSON.stringify(data) // Convert the data to JSON format
+      };
+
+      // Send the POST request
+      fetch(url, options)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json(); // Parse the JSON response
+        })
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
+
     }
 
   }
