@@ -7,7 +7,7 @@ require_once 'database/db_connection.php';
 <html>
 
 <head>
-    <title>Create Account</title>
+    <title>Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,6 +31,7 @@ require_once 'database/db_connection.php';
             margin-bottom: 8px;
         }
 
+        input[type="number"],
         input[type="text"],
         input[type="password"],
         input[type="submit"] {
@@ -55,19 +56,16 @@ require_once 'database/db_connection.php';
 
 <body>
 
+
     <div class="container">
-        <h2>Create Account</h2>
+        <h2>Login</h2>
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" required>
-
-            <label for="password">Password:</label>
+            <label for="id">ID:</label>
+            <input type="number" id="id" name="id" required>
+            <label for="id">Password:</label>
             <input type="password" id="password" name="password" required>
 
-            <input type="submit" value="Create Account">
+            <input type="submit" value="Login" name="Submit">
         </form>
     </div>
 
@@ -75,8 +73,7 @@ require_once 'database/db_connection.php';
     // Check if the form is submitted
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Retrieve form data
-        $name = $_POST['name'];
-        $last_name = $_POST['last_name'];
+        $id = $_POST['id'];
         $password = $_POST['password'];
 
         try {
@@ -84,26 +81,39 @@ require_once 'database/db_connection.php';
             $pdo = connectDb(); // Assuming connectDb() function is available from db_connection.php
 
             // Hash the password
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
+            echo $id;
+            echo $password;
             // Prepare SQL statement to insert a new user
-            $sql = "INSERT INTO users (name, last_name, password) VALUES (:name, :last_name, :password)";
+            $sql = "SELECT * FROM users WHERE uid = :uid";
             $stmt = $pdo->prepare($sql);
-            echo $hashedPassword;
+
             // Bind parameters and execute the prepared statement
-            $stmt->bindParam(':name', $name);
-            $stmt->bindParam(':last_name', $last_name);
-            $stmt->bindParam(':password', $hashedPassword);
+            $stmt->bindParam(':uid', $id);
             $stmt->execute();
 
+            if ($stmt->rowCount() == 0) {
+                throw new Exception('Invalid ID');
+            }
+
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!password_verify($password, $user['password'])) {
+                throw new Exception('Invalid password');
+            }
+            if ($id == 0) {
+                //admin
+                header("Location: http://localhost/Phishing-Detector/FrontEnd/database/display_table.php");
+            }
+            $_SESSION['uid'] = $user['uid'];
+            header("Location: http://localhost/Phishing-Detector/FrontEnd/index.php");
             // Display success message
-            echo '<div style="text-align: center; margin-top: 20px; color: green;">User account created successfully!</div>';
+            echo '<div style="text-align: center; margin-top: 20px; color: green;">Logged in successfully!</div>';
 
             // Close the database connection
             $pdo = null;
         } catch (PDOException $e) {
             // Display error message
-            echo '<div style="text-align: center; margin-top: 20px; color: red;">Error creating user account: ' . $e->getMessage() . '</div>';
+            echo '<div style="text-align: center; margin-top: 20px; color: red;">Error logging in: ' . $e->getMessage() . '</div>';
         }
     }
     ?>
