@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Scam Checker</title>
+    <title>Anti Phishing Academy</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -21,7 +21,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.3);
+            background-color: #D1E6F0;
             /* Transparent white */
             padding: 10px 20px;
             display: flex;
@@ -92,6 +92,7 @@
         }
 
         .box {
+            text-align: justify;
             max-width: 600px;
             background-color: rgba(0, 0, 0, 0.7); /* Dark with transparency */
             padding: 30px;
@@ -200,7 +201,7 @@
             Anti Phishing Academy
         </div style="font-size:20px;">
         <a href="http://localhost/Phishing-Detector/FrontEnd/create_account.php">Create Account</a>
-        <a href="http://localhost/Phishing-Detector/FrontEnd/login.php">Log In</a>
+        <a href="http://localhost/Phishing-Detector/FrontEnd/login.php">Login</a>
     </div>
 
 <div class="background">
