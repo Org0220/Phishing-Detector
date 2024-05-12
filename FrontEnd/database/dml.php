@@ -3,7 +3,8 @@
 require_once 'db_connection.php';
 require_once 'hash_password.php';
 
-function createUser($name, $last_name, $password) {
+function createUser($name, $last_name, $password)
+{
     try {
         // Connect to the database
         $pdo = connectDb();
@@ -28,7 +29,8 @@ function createUser($name, $last_name, $password) {
     }
 }
 
-function storeResult($uid, $result) {
+function storeResult($uid, $result)
+{
     try {
         // Connect to the database
         $pdo = connectDb();
@@ -45,6 +47,7 @@ function storeResult($uid, $result) {
         echo "Error storing result: " . $e->getMessage();
     } finally {
         // Close the database connection
+
         $pdo = null;
     }
 }

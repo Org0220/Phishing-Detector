@@ -6,10 +6,16 @@ require_once 'database/dml.php';
 // getting email data from mixed_emails.json
 $json = file_get_contents('data/mixed_emails.json');
 $data = json_decode($json, true);
-
+storeResult(25, 10);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  echo "<script>console.log('" . $_POST['score'] . "');</script>";
+
   $score = $_POST['score'];
-  $uid = $_SESSION['uid'];
+  $myfile = fopen("currentId.txt", "r") or die("Unable to open file!");
+  $uid = fread($myfile, filesize("currentId.txt"));
+  echo "<script>console.log('" . $uid . "');</script>";
+
+  $uid = intval($uid);
   storeResult($uid, $score);
 }
 ?>
@@ -58,39 +64,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     outline: 0 !important;
     box-shadow: none !important;
   }
+
+  .background {
+    background-image: url('90614.jpg');
+    /* Replace 'background-image.jpg' with the path to your background image */
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
 </style>
 
 
 <br><br><br><br><br>
-<div class="container-fluid">
-  <div class="d-flex justify-content-center row">
-    <div class="col-md-10 col-lg-10">
-      <div class="border">
-        <div class="question bg-white p-3 border-bottom">
-          <div class="d-flex flex-row justify-content-between align-items-center mcq">
-            <h4>MCQ Quiz</h4><span id="questionNumber">( 1 of 10)</span>
+<div class="background">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-center row">
+      <div class="col-md-10 col-lg-10">
+        <div class="border">
+          <div class="question bg-white p-3 border-bottom">
+            <div class="d-flex flex-row justify-content-between align-items-center mcq">
+              <h4>MCQ Quiz</h4><span id="questionNumber">( 1 of 10)</span>
+            </div>
           </div>
-        </div>
-        <div class="question bg-white p-3 border-bottom">
-          <div class="d-flex flex-row align-items-center question-title">
-            <h3 id="subject"></h3>
-          </div>
-          <div class="d-flex flex-row align-items-center question-title">
-            <h5 id="body">
-              </h3>
-          </div>
-          <div id="spam" class="ans ml-2">
-            <label class="radio"> <input type="radio" name="option" value="spam"> <span>spam</span>
-            </label>
-          </div>
-          <div id="ham" class="ans ml-2">
-            <label class="radio"> <input type="radio" name="option" value="ham"> <span>ham</span>
-            </label>
-          </div>
+          <div class="question bg-white p-3 border-bottom">
+            <div class="d-flex flex-row align-items-center question-title">
+              <h3 id="subject"></h3>
+            </div>
+            <div class="d-flex flex-row align-items-center question-title">
+              <h5 id="body">
+                </h3>
+            </div>
+            <div id="ham" class="ans ml-2">
+              <label class="radio"> <input type="radio" name="option" value="ham"> <span>ham</span>
+              </label>
+            </div>
+            <div id="spam" class="ans ml-2">
+              <label class="radio"> <input type="radio" name="option" value="spam"> <span>spam</span>
+              </label>
+            </div>
 
-        </div>
-        <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
-          <button class="btn btn-primary d-flex align-items-center btn-danger" type="button" onclick=displayQuestion()>Next</button>
+
+          </div>
+          <div id="Next" class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
+
+            <button class="btn btn-primary d-flex align-items-center btn-danger" type="button" onclick=displayQuestion()>Next</button>
+          </div>
         </div>
       </div>
     </div>
@@ -108,14 +128,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   function displayQuestion() {
 
-    console.log(count < 10)
     if (count < 10) {
       if (isQuestion) {
         document.getElementById("spam").style.visibility = "visible";
         document.getElementById("ham").style.visibility = "visible";
         isQuestion = false;
         var radios = document.getElementsByName('option');
-        console.log(radios)
         if (!radios[0].checked && !radios[1].checked) {
           alert("Please select an option");
           return
@@ -128,12 +146,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (userAnswer == correctAnswer) {
           score++;
         }
+        if (count == 9) {
+          // replace with a form and submit button
+          document.getElementById("Next").innerHTML = "<form method='post' action='<?php echo $_SERVER['PHP_SELF']; ?>'><button class='btn btn-primary d-flex align-items-center btn-danger' type='submit' name = 'score' value = " + score + ">Next</button></form>";
+        }
         count++;
 
         firstPart();
       } else {
         isQuestion = true;
-        document.getElementById("subject").innerHTML = userAnswer == correctAnswer;
+        if (userAnswer == correctAnswer) {
+          document.getElementById("subject").innerHTML = "correct";
+        } else {
+          document.getElementById("subject").innerHTML = "incorrect";
+        }
         document.getElementById("body").innerHTML = "";
         document.getElementById("spam").style.visibility = "hidden";
         document.getElementById("ham").style.visibility = "hidden";
@@ -141,35 +167,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } else {
       alert("Quiz completed! Your score is: " + score + "/ 10");
-      // Define the URL endpoint and the data you want to send
-      const url = 'http://localhost/Phishing-Detector/FrontEnd/quiz.php';
-      const jsonData = {
-        score: score,
-      };
-      console.log(jsonData)
-      // Define options for the fetch request
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json' // Set the content type to JSON
-        },
-        body: JSON.stringify(jsonData) // Convert the data to JSON format
-      };
+      // // Define the URL endpoint and the data you want to send
+      // const url = 'http://localhost/Phishing-Detector/FrontEnd/quiz.php';
+      // const xhr = new XMLHttpRequest();
+      // const data2 = {
+      //   score: score
+      // };
+      // const jsonData = JSON.stringify(data2);
 
-      // Send the POST request
-      fetch(url, options)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json(); // Parse the JSON response
-        })
-        .then(data => {
-          console.log('Success:', jsonData);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+      // xhr.open('POST', url, true);
+      // xhr.setRequestHeader('Content-Type', 'application/json');
+
+      // xhr.onreadystatechange = function() {
+      //   if (xhr.readyState === XMLHttpRequest.DONE) {
+      //     if (xhr.status === 200) {
+      //       console.log('Success:', xhr.responseText);
+      //     } else {
+      //       console.error('Error:', xhr.status);
+      //     }
+      //   }
+      // };
+
+      // xhr.send(jsonData);
+      // console.log(jsonData);
 
 
     }
