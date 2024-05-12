@@ -35,9 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   label.radio span {
     padding: 4px 0px;
-    border: 1px solid red;
+    border: 1px solid #1a237e;
     display: inline-block;
-    color: red;
+    color: #1a237e;
     width: 100px;
     text-align: center;
     border-radius: 3px;
@@ -46,8 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   label.radio input:checked+span {
-    border-color: red;
-    background-color: red;
+    border-color: #1a237e;
+    background-color: #1a237e;
     color: #fff;
   }
 
