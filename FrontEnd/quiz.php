@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </style>
 
 
-<br><br>
+<br><br><br><br><br>
 <div class="container-fluid">
   <div class="d-flex justify-content-center row">
     <div class="col-md-10 col-lg-10">
@@ -79,11 +79,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h5 id="body">
               </h3>
           </div>
-          <div class="ans ml-2">
+          <div id="spam" class="ans ml-2">
             <label class="radio"> <input type="radio" name="option" value="spam"> <span>spam</span>
             </label>
           </div>
-          <div class="ans ml-2">
+          <div id="ham" class="ans ml-2">
             <label class="radio"> <input type="radio" name="option" value="ham"> <span>ham</span>
             </label>
           </div>
@@ -104,29 +104,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   var usedValues = [];
   var userAnswer = "";
   firstPart();
-
+  var isQuestion = false;
 
   function displayQuestion() {
+
     console.log(count < 10)
     if (count < 10) {
+      if (isQuestion) {
+        document.getElementById("spam").style.visibility = "visible";
+        document.getElementById("ham").style.visibility = "visible";
+        isQuestion = false;
+        var radios = document.getElementsByName('option');
+        console.log(radios)
+        if (!radios[0].checked && !radios[1].checked) {
+          alert("Please select an option");
+          return
+        }
+        if (radios[0].checked) {
+          userAnswer = radios[0].value;
+        } else if (radios[1].checked)
+          userAnswer = radios[1].value;
 
-      var radios = document.getElementsByName('option');
-      console.log(radios)
-      if (!radios[0].checked && !radios[1].checked) {
-        alert("Please select an option");
-        return
+        if (userAnswer == correctAnswer) {
+          score++;
+        }
+        count++;
+
+        firstPart();
+      } else {
+        isQuestion = true;
+        document.getElementById("subject").innerHTML = userAnswer == correctAnswer;
+        document.getElementById("body").innerHTML = "";
+        document.getElementById("spam").style.visibility = "hidden";
+        document.getElementById("ham").style.visibility = "hidden";
       }
-      if (radios[0].checked) {
-        userAnswer = radios[0].value;
-      } else if (radios[1].checked)
-        userAnswer = radios[1].value;
-
-      if (userAnswer == correctAnswer) {
-        score++;
-      }
-      count++;
-
-      firstPart();
 
     } else {
       alert("Quiz completed! Your score is: " + score + "/ 10");
