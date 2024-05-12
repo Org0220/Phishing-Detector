@@ -73,7 +73,7 @@
 
         .container {
             max-width: 600px;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.5);
             /* White with slight transparency */
             padding: 30px;
             border-radius: 10px;
@@ -88,9 +88,24 @@
             background-position: center;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
         }
+
+        .box {
+            max-width: 600px;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark with transparency */
+            padding: 30px;
+            border-radius: 10px;
+            margin-left: 80px;
+            margin-top: 70px; /* Adjusted to make space for navbar */
+            color: white; /* White text color */
+        }
+
+        .box p {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Use a different font */
+            font-style: italic; /* Italic font style */
+            color: #e8e9f2;
+}
 
         h1 {
             text-align: center;
@@ -145,7 +160,7 @@
     <div class="navbar">
         <div class="logo">
             <img src="Logo.png" alt="Logo">
-            Anti-Phishing Academy
+            Anti Phishing Academy
         </div>
         <a href="http://localhost/Phishing-Detector/FrontEnd/index.php">Home</a>
         <a href="http://localhost/Phishing-Detector/FrontEnd/quiz.php">Test Yourself</a>
