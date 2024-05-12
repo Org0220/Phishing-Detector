@@ -104,8 +104,9 @@ $data = json_decode($json, true);
 
       var radios = document.getElementsByName('option');
       console.log(radios)
-      while (!radios[0].checked && !radios[1].checked) {
+      if (!radios[0].checked && !radios[1].checked) {
         alert("Please select an option");
+        return
       }
       if (radios[0].checked) {
         userAnswer = radios[0].value;
