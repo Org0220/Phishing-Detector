@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         ?>
     </div>
-        <h1>Email Scam Checker</h1>
+        <h1>Email Verification</h1>
 
         <p>Paste the content of the email you received below to check if it's a scam:</p>
         <form method="post">
