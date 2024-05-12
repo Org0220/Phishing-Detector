@@ -10,17 +10,19 @@
         table {
             width: 75%;
             border-collapse: collapse;
-            margin: 30px;
+            margin: 30px auto;
         }
         table, th, td {
-            margin: auto;
             text-align: center;
             border: 1px solid black;
             padding: 5px;
-            text-align: center;
         }
         th {
             background-color: #f2f2f2;
+        }
+        .delete-btn {
+            color: red;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -31,6 +33,31 @@
 <?php
 // Include db_connection.php to use the connectDB() function
 require_once 'db_connection.php';
+
+// Check if the delete button is clicked
+if (isset($_POST['delete_uid']) && is_numeric($_POST['delete_uid'])) {
+    try {
+        // Establish database connection using connectDB() function
+        $pdo = connectDB();
+
+        // Prepare SQL statement to delete user by uid
+        $sql = "DELETE FROM users WHERE uid = :uid";
+        $stmt = $pdo->prepare($sql);
+
+        // Bind parameters and execute the prepared statement
+        $stmt->bindParam(':uid', $_POST['delete_uid'], PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Close the database connection
+        $pdo = null;
+
+        // Redirect back to the page after deletion
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit;
+    } catch (PDOException $e) {
+        echo 'Error deleting user: ' . $e->getMessage();
+    }
+}
 
 try {
     // Establish database connection using connectDB() function
@@ -62,6 +89,7 @@ try {
                 <th>Minimum Result</th>
                 <th>Average Result</th>
                 <th>Maximum Result</th>
+                <th>Delete</th>
               </tr>';
 
         // Fetch and display each user's data
@@ -74,6 +102,14 @@ try {
             echo '<td>' . ($row['min_result'] !== null ? $row['min_result'] : 'N/A') . '</td>'; // Display "N/A" if min_result is null
             echo '<td>' . ($row['avg_result'] !== null ? intval($row['avg_result']) : 'N/A') . '</td>'; // Display "N/A" if avg_result is null
             echo '<td>' . ($row['max_result'] !== null ? $row['max_result'] : 'N/A') . '</td>'; // Display "N/A" if max_result is null
+            
+            // Check if uid is not equal to 1 to display the delete button
+            if ($row['uid'] != 1) {
+                echo '<td><button class="delete-btn" onclick="deleteUser(' . $row['uid'] . ')">&times;</button></td>'; // Delete button with uid parameter
+            } else {
+                echo '<td></td>'; // Display empty column if uid is 1 (no delete button)
+            }
+            
             echo '</tr>';
         }
 
@@ -88,6 +124,31 @@ try {
 // Close the database connection
 $pdo = null;
 ?>
+
+<script>
+// JavaScript function to confirm user deletion and submit form
+function deleteUser(uid) {
+    if (confirm('Are you sure you want to delete this user?')) {
+        // Create a form element dynamically
+        var form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', '<?php echo $_SERVER['PHP_SELF']; ?>');
+
+        // Create an input element to hold the uid value
+        var inputUid = document.createElement('input');
+        inputUid.setAttribute('type', 'hidden');
+        inputUid.setAttribute('name', 'delete_uid');
+        inputUid.setAttribute('value', uid);
+
+        // Append input element to the form
+        form.appendChild(inputUid);
+
+        // Append form to the document body and submit
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
 
 </body>
 </html>
