@@ -92,6 +92,7 @@
         }
 
         .box {
+            text-align: justify;
             max-width: 600px;
             background-color: rgba(0, 0, 0, 0.7); /* Dark with transparency */
             padding: 30px;
