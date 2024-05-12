@@ -11,3 +11,4 @@ To do so, run the following commands:
 - pip install joblib
 
 Run the submmission_checker.py file in the BackEnd folder seperately and locally host the website found in the FrontEnd to use the email check tool.
+Make sure to initialize Database parameters properly in db_connection.php!!
