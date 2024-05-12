@@ -24,34 +24,108 @@
             color: red;
             cursor: pointer;
         }
+        #add-user-form {
+            margin: 20px auto;
+            width: 30%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center; /* Center content within the form */
+        }
+        #add-user-form input[type="text"],
+        #add-user-form input[type="password"],
+        #add-user-form input[type="submit"] {
+            margin: 5px auto; /* Center the input elements horizontally */
+            padding: 8px;
+            width: 90%;
+            box-sizing: border-box;
+        }
+        #add-user-form label {
+            display: block; /* Display labels as block elements (on new lines) */
+            margin-bottom: 5px; /* Add space below each label */
+            text-align: left; /* Align labels to the left */
+        }
     </style>
 </head>
 <body>
 
 <h1>Users & Results</h1>
 
+<!-- Add User Form -->
+<div id="add-user-form">
+    <h2>+ Add a User</h2>
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <label for="name" style = "margin-left: 20px;">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="last_name" style = "margin-left: 20px;"> Last Name:</label>
+        <input type="text" id="last_name" name="last_name" required><br>
+
+        <label for="password" style = "margin-left: 20px;">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <input type="submit" value="Add User">
+    </form>
+</div>
+
 <?php
 // Include db_connection.php to use the connectDB() function
 require_once 'db_connection.php';
 
-// Check if the delete button is clicked
-if (isset($_POST['delete_uid']) && is_numeric($_POST['delete_uid'])) {
+// Handle form submission to add a new user
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['last_name'], $_POST['password'])) {
+    $name = $_POST['name'];
+    $last_name = $_POST['last_name'];
+    $password = $_POST['password'];
+
     try {
         // Establish database connection using connectDB() function
         $pdo = connectDB();
 
-        // Prepare SQL statement to delete user by uid
-        $sql = "DELETE FROM users WHERE uid = :uid";
+        // Hash the password
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // Prepare SQL statement to insert a new user
+        $sql = "INSERT INTO users (name, last_name, password) VALUES (:name, :last_name, :password)";
         $stmt = $pdo->prepare($sql);
 
         // Bind parameters and execute the prepared statement
-        $stmt->bindParam(':uid', $_POST['delete_uid'], PDO::PARAM_INT);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':last_name', $last_name);
+        $stmt->bindParam(':password', $hashedPassword);
         $stmt->execute();
 
         // Close the database connection
         $pdo = null;
 
-        // Redirect back to the page after deletion
+        // Redirect back to the page after adding the user
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit;
+    } catch (PDOException $e) {
+        echo 'Error adding user: ' . $e->getMessage();
+    }
+}
+
+// Handle form submission to delete a user
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_uid'])) {
+    $deleteUid = $_POST['delete_uid'];
+
+    try {
+        // Establish database connection using connectDB() function
+        $pdo = connectDB();
+
+        // Prepare SQL statement to delete the user
+        $sql = "DELETE FROM users WHERE uid = :uid";
+        $stmt = $pdo->prepare($sql);
+
+        // Bind parameter and execute the prepared statement
+        $stmt->bindParam(':uid', $deleteUid);
+        $stmt->execute();
+
+        // Close the database connection
+        $pdo = null;
+
+        // Redirect back to the page after deleting the user
         header('Location: ' . $_SERVER['PHP_SELF']);
         exit;
     } catch (PDOException $e) {
