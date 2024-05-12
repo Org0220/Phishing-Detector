@@ -9,10 +9,13 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.metrics import classification_report
 from joblib import Parallel, delayed 
 import joblib
+import os
+
+current_dir = os.path.dirname(__file__)
 
 # Load the dataset
-dataset1 = pd.read_csv('./BackEnd/mail_data_1.csv', encoding='latin-1')
-dataset2 = pd.read_csv('./BackEnd/mail_data_2.csv', encoding='latin-1')
+dataset1 = pd.read_csv(current_dir + '/mail_data_1.csv', encoding='latin-1')
+dataset2 = pd.read_csv(current_dir + '/mail_data_2.csv', encoding='latin-1')
 
 # Drop unnecessary columns in dataset2
 dataset2.drop(['Index', 'LabelNum'], axis=1, inplace=True)

@@ -1,45 +1,31 @@
+import os
 from sklearn.feature_extraction.text import TfidfVectorizer
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from joblib import Parallel, delayed 
 import joblib
 
-# Load the model
-reg_from_joblib = joblib.load('./BackEnd/saved_model.pkl')
+current_dir = os.path.dirname(__file__)
 
-# Load the vectorizer
-feature_extraction = joblib.load('./BackEnd/feature_extraction.pkl')
+# Load the model and vectorizer
+feature_extraction = joblib.load(current_dir + '/feature_extraction.pkl')
+reg_from_joblib = joblib.load(current_dir + '/saved_model.pkl')
 
-# Predict function
+app = Flask(__name__)
+@app.route('/submit', methods=['GET', 'POST'])
+
+def receive_data():
+    email = request.form.get('emailContent')
+    # Example computation: Create a greeting message
+    response_message = predict(email, reg_from_joblib)
+    return jsonify({'message': response_message})
+
 def predict(text,model):
     prediction_text = feature_extraction.transform([text])
     result = model.predict(prediction_text)
     if result[0] == 1:
-        print("Ham Mail")
+        return "Ham"
     else:
-        print("Spam Mail")
+        return "Spam"
 
-# Test string
-test_mail = "TEXT INPUT"
-
-# Predict
-predict(test_mail, reg_from_joblib)
-
-# # GET and POST methods
-# textToConvert = ""
-# app = Flask(__name__)
-# @app.route('/submit', methods=['GET', 'POST'])
-
-# def upload():
-#     # Check if the incoming POST is a file or text
-#     if request.method == 'POST':
-#         if 'file' in request.files:
-#             file = request.files['file']
-#             textToConvert = file.read()
-#         else:
-#             textToConvert = request.form['text']
-
-#     # Call the ML model to check if the text is a phishing attempt
-#     # If it is, return 'Phishing Attempt Detected!'
-#     # If it is not, return 'Success!'
-
-#     return 'Success!'
+if __name__ == '__main__':
+    app.run()
