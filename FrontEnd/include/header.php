@@ -94,17 +94,22 @@
         .box {
             text-align: justify;
             max-width: 600px;
-            background-color: rgba(0, 0, 0, 0.7); /* Dark with transparency */
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Dark with transparency */
             padding: 30px;
             border-radius: 10px;
             margin-left: 80px;
-            margin-top: 70px; /* Adjusted to make space for navbar */
-            color: white; /* White text color */
+            margin-top: 70px;
+            /* Adjusted to make space for navbar */
+            color: white;
+            /* White text color */
         }
 
         .box p {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Use a different font */
-            font-style: italic; /* Italic font style */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Use a different font */
+            font-style: italic;
+            /* Italic font style */
             color: #e8e9f2;
         }
 
@@ -119,7 +124,7 @@
         .flex-container {
             display: flex;
             flex-direction: column;
-            justify-content:center;
+            justify-content: center;
             align-items: center, stretch;
 
         }
@@ -197,11 +202,12 @@
 
     <div class="navbar">
         <div class="logo">
-        <a href="http://localhost/Phishing-Detector/FrontEnd/index.php"><img src="Logo.png" alt="Logo">
-            Anti Phishing Academy</a>
+            <a href="http://localhost/Phishing-Detector/FrontEnd/index.php"><img src="Logo.png" alt="Logo">
+                Anti Phishing Academy</a>
         </div style="font-size:20px;">
         <a href="http://localhost/Phishing-Detector/FrontEnd/index.php">Home</a>
         <a href="http://localhost/Phishing-Detector/FrontEnd/quiz.php">Test Yourself</a>
         <a href="http://localhost/Phishing-Detector/FrontEnd/phishing_checker.php">Email Verification</a>
         <a href="http://localhost/Phishing-Detector/FrontEnd/educational_page.php">More on Phishing</a>
+        <a href="http://localhost/Phishing-Detector/FrontEnd/logout.php">Logout</a>
     </div>
