@@ -11,6 +11,7 @@ require_once 'database/db_connection.php';
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
         }
 
         .container {
@@ -20,6 +21,70 @@ require_once 'database/db_connection.php';
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: #f9f9f9;
+        }
+
+        .background {
+            background-image: url('90614.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #D1E6F0;
+            /* Transparent white */
+            padding: 10px 0px;
+            display: flex;
+            /* Use flexbox for layout */
+            align-items: center;
+            /* Center items vertically */
+            z-index: 1000;
+            /* Ensure navbar stays on top */
+            transition: background-color 0.3s ease;
+            /* Smooth transition on hover */
+        }
+
+        .logo {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Use a different font */
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a237e;
+            /* Dark Blue */
+            margin-right: auto;
+            /* Pushes the logo to the left */
+            display: flex;
+            /* Use flexbox for layout */
+            align-items: center;
+            /* Center items vertically */
+        }
+
+        .logo img {
+            margin-right: 10px;
+            /* Add some space between logo text and image */
+            max-height: 70px;
+            /* Set maximum height for the image */
+        }
+
+        .navbar a {
+            color: #1a237e;
+            /* Dark Blue */
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            /* Smooth transition on hover */
+        }
+
+        .navbar a:hover {
+            color: #0d47a1;
+            /* Darker Blue on hover */
         }
 
         h2 {
@@ -41,34 +106,47 @@ require_once 'database/db_connection.php';
         }
 
         input[type="submit"] {
-            background-color: #4CAF50;
+            background-color: #1a237e;
             color: white;
             border: none;
             cursor: pointer;
         }
 
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #121858;
         }
     </style>
 </head>
 
 <body>
+    
+    <div class="navbar">
+        <div class="logo">
+            <img src="Logo.png" alt="Logo">
+            Anti Phishing Academy
+        </div style="font-size:20px;">
+        <a href="http://localhost/Phishing-Detector/FrontEnd/index.php">Home</a>
+        <a href="http://localhost/Phishing-Detector/FrontEnd/create_account.php">Create Account</a>
+        <a href="http://localhost/Phishing-Detector/FrontEnd/login.php">Login</a>
+        
+    </div>
 
-    <div class="container">
-        <h2>Create Account</h2>
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+    <div class="background">
+        <div class="container">
+            <h2>Create Account</h2>
+            <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
 
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" required>
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
 
-            <input type="submit" value="Create Account">
-        </form>
+                <input type="submit" value="Create Account">
+            </form>
+        </div>
     </div>
 
     <?php
