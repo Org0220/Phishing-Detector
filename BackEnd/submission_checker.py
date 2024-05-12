@@ -21,27 +21,14 @@ def predict(text,model):
 # Test string
 test_mail = "TEXT INPUT"
 
+# Predict
 predict(test_mail, reg_from_joblib)
 
-# prediction = reg_from_joblib.predict(test_mail)
-# input_data_features = feature_extraction.transform([test_mail])
-# prediction = reg_from_joblib.predict(input_data_features)
-
-# if prediction[0] == 1:
-#     print("Ham Mail")
-# else:
-#     print("Spam Mail")
-
-
-
-
-
-
+# # GET and POST methods
 # textToConvert = ""
-
 # app = Flask(__name__)
-
 # @app.route('/submit', methods=['GET', 'POST'])
+
 # def upload():
 #     # Check if the incoming POST is a file or text
 #     if request.method == 'POST':
