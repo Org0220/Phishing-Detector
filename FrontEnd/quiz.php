@@ -56,8 +56,8 @@ $data = json_decode($json, true);
 </style>
 
 
-
-<div class="container">
+<br><br>
+<div class="container-fluid">
   <div class="d-flex justify-content-center row">
     <div class="col-md-10 col-lg-10">
       <div class="border">
@@ -126,7 +126,7 @@ $data = json_decode($json, true);
     } else {
       alert("Quiz completed! Your score is: " + score + "/ 10");
       // Define the URL endpoint and the data you want to send
-      const url = 'localhost/Phishing-Detector/FrontEnd/index.php';
+      const url = 'http://localhost/Phishing-Detector/FrontEnd/quiz.php';
       const data = {
         score: score,
       };
