@@ -7,6 +7,11 @@ require_once 'database/dml.php';
 $json = file_get_contents('data/mixed_emails.json');
 $data = json_decode($json, true);
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $score = $_POST['score'];
+  $uid = $_SESSION['uid'];
+  storeResult($uid, $score);
+}
 ?>
 
 <style>
@@ -127,17 +132,17 @@ $data = json_decode($json, true);
       alert("Quiz completed! Your score is: " + score + "/ 10");
       // Define the URL endpoint and the data you want to send
       const url = 'http://localhost/Phishing-Detector/FrontEnd/quiz.php';
-      const data = {
+      const jsonData = {
         score: score,
       };
-      console.log(data)
+      console.log(jsonData)
       // Define options for the fetch request
       const options = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json' // Set the content type to JSON
         },
-        body: JSON.stringify(data) // Convert the data to JSON format
+        body: JSON.stringify(jsonData) // Convert the data to JSON format
       };
 
       // Send the POST request
@@ -149,7 +154,7 @@ $data = json_decode($json, true);
           return response.json(); // Parse the JSON response
         })
         .then(data => {
-          console.log('Success:', data);
+          console.log('Success:', jsonData);
         })
         .catch(error => {
           console.error('Error:', error);
