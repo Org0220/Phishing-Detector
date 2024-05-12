@@ -197,8 +197,8 @@
 
     <div class="navbar">
         <div class="logo">
-            <img src="Logo.png" alt="Logo">
-            Anti Phishing Academy
+        <a href="http://localhost/Phishing-Detector/FrontEnd/index.php"><img src="Logo.png" alt="Logo">
+            Anti Phishing Academy</a>
         </div style="font-size:20px;">
         <a href="http://localhost/Phishing-Detector/FrontEnd/index.php">Home</a>
         <a href="http://localhost/Phishing-Detector/FrontEnd/quiz.php">Test Yourself</a>
