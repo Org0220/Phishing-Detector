@@ -9,17 +9,17 @@ reg_from_joblib = joblib.load('./BackEnd/saved_model.pkl')
 # Load the vectorizer
 feature_extraction = joblib.load('./BackEnd/feature_extraction.pkl')
 
-#predict function
+# Predict function
 def predict(text,model):
-    cw = feature_extraction.transform([text])
-    result = model.predict(cw)
+    prediction_text = feature_extraction.transform([text])
+    result = model.predict(prediction_text)
     if result[0] == 1:
         print("Ham Mail")
     else:
         print("Spam Mail")
 
-# test string
-test_mail = "Hey John, how r u? I was wondering what the status of the proeject is."
+# Test string
+test_mail = "TEXT INPUT"
 
 predict(test_mail, reg_from_joblib)
 
