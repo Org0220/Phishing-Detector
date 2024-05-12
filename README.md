@@ -4,4 +4,6 @@ To do so, run the following commands:
 - pip install pandas
 - pip install matplotlib
 - pip install seaborn
-- !pip install scikit-learn
+- pip install scikit-learn
+- pip install flask
+- pip install joblib
