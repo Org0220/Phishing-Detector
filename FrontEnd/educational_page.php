@@ -5,8 +5,8 @@
 <div class="flex-container">
     <div class="doup" style = "margin-top:120px">
         <h1>What Is Phishing?</h1>
-        <p style="color:black">Phishing emails are deceptive messages sent by cybercriminals who masquerade as trustworthy entities, such as banks, social media platforms, or government agencies, in an attempt to steal sensitive information or spread malware.</p>
-        <p style="color:black">It's a significant threat to individuals, businesses, and organizations worldwide, with billions of dollars lost each year due to phishing scams.</p>
+        <p style="color:black; text-align:center">Phishing is a type of cyber attack where a perpetrator, typically disguised as a trustworthy entity, attempts to trick individuals into providing sensitive information such as passwords, credit card numbers, or other personal details. This is often done through deceptive emails, messages, or websites that appear to be from legitimate sources.</p>
+        <p style="color:black; text-align:center">The goal of phishing is to gain access to sensitive information that can be used for fraudulent purposes, such as identity theft, financial fraud, or unauthorized access to accounts. Phishing attacks often rely on social engineering tactics to exploit human psychology, such as creating a sense of urgency or using official-looking logos and language to deceive the victim.</p>
     </div>
     <div class="doup">
         <h2>Features to Look Out For In Emails:</h2>
