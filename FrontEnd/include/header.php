@@ -198,7 +198,7 @@
         <div class="logo">
             <img src="Logo.png" alt="Logo">
             Anti Phishing Academy
-        </div>
+        </div style="font-size:20px;">
         <a href="http://localhost/Phishing-Detector/FrontEnd/index.php">Home</a>
         <a href="http://localhost/Phishing-Detector/FrontEnd/quiz.php">Test Yourself</a>
         <a href="http://localhost/Phishing-Detector/FrontEnd/phishing_checker.php">Email Verification</a>
