@@ -3,6 +3,61 @@
 require_once 'database/db_connection.php';
 ?>
 
+<?php
+    // Check if the form is submitted
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Retrieve form data
+        $id = $_POST['id'];
+        $password = $_POST['password'];
+
+        try {
+            // Establish database connection using connectDb() function
+            $pdo = connectDb(); // Assuming connectDb() function is available from db_connection.php
+
+            // Hash the password
+
+            // Prepare SQL statement to insert a new user
+            $sql = "SELECT * FROM users WHERE uid = :uid";
+            $stmt = $pdo->prepare($sql);
+
+            // Bind parameters and execute the prepared statement
+            $stmt->bindParam(':uid', $id);
+            $stmt->execute();
+            $redirect = true;
+            if ($stmt->rowCount() == 0) {
+                echo 'Invalid ID';
+                $redirect = false;
+            }
+
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!password_verify($password, $user['password'])) {
+                echo 'Invalid password';
+                $redirect = false;
+                
+            }$pdo = null;
+            if($redirect){
+            if ($id == 1) {
+                //admin
+                header("Location: database/display_table.php");
+                
+            } else {
+            session_start();
+            $_SESSION['uid'] = $user['uid'];
+            header("Location: http://localhost/Phishing-Detector/FrontEnd/home.php");
+            }
+            exit;
+            // Display success message
+            echo '<div style="text-align: center; margin-top: 20px; color: green;">Logged in successfully!</div>';
+        }
+            // Close the database connection
+            $pdo = null;
+            
+        } catch (PDOException $e) {
+            // Display error message
+            echo '<div style="text-align: center; margin-top: 20px; color: red;">Error logging in: ' . $e->getMessage() . '</div>';
+        }
+    }
+    ?>
 <!DOCTYPE html>
 <html>
 
@@ -120,6 +175,8 @@ require_once 'database/db_connection.php';
     </style>
 </head>
 
+
+
 <body>
 
     <div class="background">
@@ -146,54 +203,7 @@ require_once 'database/db_connection.php';
         <a href="http://localhost/Phishing-Detector/FrontEnd/login.php">Login</a>
     </div>
 
-    <?php
-    // Check if the form is submitted
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Retrieve form data
-        $id = $_POST['id'];
-        $password = $_POST['password'];
-
-        try {
-            // Establish database connection using connectDb() function
-            $pdo = connectDb(); // Assuming connectDb() function is available from db_connection.php
-
-            // Hash the password
-
-            echo $id;
-            echo $password;
-            // Prepare SQL statement to insert a new user
-            $sql = "SELECT * FROM users WHERE uid = :uid";
-            $stmt = $pdo->prepare($sql);
-
-            // Bind parameters and execute the prepared statement
-            $stmt->bindParam(':uid', $id);
-            $stmt->execute();
-
-            if ($stmt->rowCount() == 0) {
-                throw new Exception('Invalid ID');
-            }
-
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!password_verify($password, $user['password'])) {
-                throw new Exception('Invalid password');
-            }
-            if ($id == 0) {
-                //admin
-                header("Location: http://localhost/Phishing-Detector/FrontEnd/database/display_table.php");
-            }
-            $_SESSION['uid'] = $user['uid'];
-            header("Location: http://localhost/Phishing-Detector/FrontEnd/home.php");
-            // Display success message
-            echo '<div style="text-align: center; margin-top: 20px; color: green;">Logged in successfully!</div>';
-
-            // Close the database connection
-            $pdo = null;
-        } catch (PDOException $e) {
-            // Display error message
-            echo '<div style="text-align: center; margin-top: 20px; color: red;">Error logging in: ' . $e->getMessage() . '</div>';
-        }
-    }
-    ?>
+    
 
 </body>
 
