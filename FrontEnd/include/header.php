@@ -105,7 +105,30 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Use a different font */
             font-style: italic; /* Italic font style */
             color: #e8e9f2;
-}
+        }
+
+        .doup {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            color: #1a237e;
+            margin: 15px;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            justify-content:center;
+            align-items: center, stretch;
+
+        }
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 55%;
+        }
 
         h1 {
             text-align: center;
@@ -116,6 +139,20 @@
         p {
             color: #555;
             line-height: 1.6;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         label {
@@ -164,6 +201,6 @@
         </div>
         <a href="http://localhost/Phishing-Detector/FrontEnd/index.php">Home</a>
         <a href="http://localhost/Phishing-Detector/FrontEnd/quiz.php">Test Yourself</a>
-        <a href="http://localhost/Phishing-Detector/FrontEnd/phishing_checker.php">Email Scam Checker</a>
+        <a href="http://localhost/Phishing-Detector/FrontEnd/phishing_checker.php">Email Verification</a>
         <a href="http://localhost/Phishing-Detector/FrontEnd/educational_page.php">More on Phishing</a>
     </div>
