@@ -1,5 +1,8 @@
 <?php include_once("include/header.php"); ?>
+
 <?php
+require_once 'database/db_connection.php';
+require_once 'database/dml.php';
 // getting email data from mixed_emails.json
 $json = file_get_contents('data/mixed_emails.json');
 $data = json_decode($json, true);
@@ -123,12 +126,11 @@ $data = json_decode($json, true);
     } else {
       alert("Quiz completed! Your score is: " + score + "/ 10");
       // Define the URL endpoint and the data you want to send
-      const url = 'https://localhost/';
+      const url = 'localhost/Phishing-Detector/FrontEnd/index.php';
       const data = {
-        key1: 'value1',
-        key2: 'value2'
+        score: score,
       };
-
+      console.log(data)
       // Define options for the fetch request
       const options = {
         method: 'POST',
@@ -168,6 +170,9 @@ $data = json_decode($json, true);
     var email = data[j];
     var emailSubject = emailText.split("\n")[0];
     var emailBody = emailText.split("\n")[1];
+    for (var i = 2; i < emailText.split("\n").length; i++) {
+      emailBody += emailText.split("\n")[i];
+    }
     if (emailSubject === null) {
       emailSubject = "No Subject";
     }
