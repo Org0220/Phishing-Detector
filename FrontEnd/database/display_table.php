@@ -53,7 +53,7 @@
 
 <!-- Add User Form -->
 <div id="add-user-form">
-    <h2>+ Add a User</h2>
+    <h2>+ Add User</h2>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <label for="name" style = "margin-left: 20px;">Name:</label>
         <input type="text" id="name" name="name" required><br>
