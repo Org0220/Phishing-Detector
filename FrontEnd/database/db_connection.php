@@ -5,8 +5,8 @@ function connectDb()
     // Database connection parameters
     $host = '127.0.0.1';
     $DBname = 'anti_phishing_academy';
-    $username = 'root';
-    $password = '';
+    $username = 'admin';
+    $password = 'admin';
 
     // Establish database connection using PDO
     try {

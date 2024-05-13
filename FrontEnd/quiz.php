@@ -6,7 +6,7 @@ require_once 'database/dml.php';
 // getting email data from mixed_emails.json
 $json = file_get_contents('data/mixed_emails.json');
 $data = json_decode($json, true);
-storeResult(25, 10);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   echo "<script>console.log('" . $_POST['score'] . "');</script>";
 
@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $uid = intval($uid);
   storeResult($uid, $score);
+  echo "<script>alert('Score: $score / 10');</script>";
 }
 ?>
 
@@ -85,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="border">
           <div class="question bg-white p-3 border-bottom">
             <div class="d-flex flex-row justify-content-between align-items-center mcq">
-              <h4>MCQ Quiz</h4><span id="questionNumber">( 1 of 10)</span>
+              <h4>Quiz</h4><span id="questionNumber">( 1 of 10)</span>
             </div>
           </div>
           <div class="question bg-white p-3 border-bottom">

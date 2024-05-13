@@ -1,8 +1,10 @@
 -- Admin account
+-- NOTE: PASSWORD NOT HASHED
 INSERT INTO users (name, last_name, password)
 VALUES ('admin', 'admin', 'admin123')
 
 -- Insert sample users
+-- NOTE: PASSWORDS NOT HASHED
 INSERT INTO users (name, last_name, password) VALUES ('Alice', 'Smith', 'P@ssw0rd');
 INSERT INTO users (name, last_name, password) VALUES ('Bob', 'Johnson', 'Secret123');
 INSERT INTO users (name, last_name, password) VALUES ('Charlie', 'Williams', 'SecurePwd');
